@@ -39,3 +39,38 @@
 // Input: "MCMXCIV"
 // Output: 1994
 // Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var romanToInt = function(s) {  
+  let sum = 0;
+  let revRomans = s.toLowerCase().split('').reverse();
+  
+  for (let i = 0; i < revRomans.length; i++) {
+    if (revRomans[i] == 'i') {
+      revRomans[i - 1] == 'v' || revRomans[i - 1] == 'x' ?
+      sum -= 1 :
+      sum += 1;
+    } else if (revRomans[i] == 'v') {
+      sum += 5;
+    } else if (revRomans[i] == 'x') {
+      revRomans[i - 1] == 'l' || revRomans[i - 1] == 'c' ?
+        sum -= 10 :
+        sum += 10;
+    } else if (revRomans[i] == 'l') {
+      sum += 50 
+    } else if (revRomans[i] == 'c') {
+      revRomans[i - 1] == 'd' || revRomans[i - 1] == 'm' ? 
+        sum -= 100 : 
+        sum += 100;
+    } else if (revRomans[i] == 'd') {
+      sum += 500;
+    } else if (revRomans[i] == 'm') {
+      sum += 1000;
+    }
+  }
+  
+  return sum;
+};

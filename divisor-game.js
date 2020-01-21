@@ -31,24 +31,24 @@
  * @return {boolean}
  */
 var divisorGame = function(N) {
-  let alice = true;
+  // let alice = true;
   
-  const makeMove = (x) => {
-    console.log(alice)
-    let array = [];
-    for (let i = 1; i <= x; i++) {
-      array.push(i)
-    }
-    for (let i = 0; i < array.length; i++) {
-      if (x % array[i] === 0) {
-        alice = !alice;
-        if (x - array[i] > 0) {
-          makeMove(x - array[i])  
-        }
-      }
-    }
-    return alice
-  }
+  // const makeMove = (x) => {
+  //   let array = [];
+  //   for (let i = 1; i <= x; i++) {
+  //     array.push(i)
+  //   }
+  //   for (let i = 0; i < array.length; i++) {
+  //     if (x % array[i] === 0) {
+  //       alice = !alice;
+  //       if (x - array[i] > 0) {
+  //         makeMove(x - array[i])  
+  //       }
+  //     }
+  //   }
+  //   return alice
+  // }
   
-  return makeMove(N);
+  // return makeMove(N);
+  return N % 2 === 0;
 };

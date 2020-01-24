@@ -18,31 +18,98 @@
 // input: 2D matrix (array)
 // output: integer
 
-const findNumCarrots = (matrix) => {
+const field = [[7, 8, 6, 3],
+ [0, 0, 7, 0],
+ [4, 9, 8, 4],
+ [3, 1, 0, 5]];
 
-  const findCenter = (array) => {
+const findNumCarrots = (matrix) => {
+  let centerCoords;
+
+  const findCenter = (matrix) => {
     let midRow;
     let midCol;
-    let rowLengthIsOdd = array.length % 2 !== 0;
-    let colLengthIsOdd = array[0].length % 2 !== 0;
+    let rowLengthIsOdd = matrix.length % 2 !== 0;
+    let colLengthIsOdd = matrix[0].length % 2 !== 0;
+
     if (rowLengthIsOdd) {
-      midRow = Math.floor(array.length / 2);
+      midRow = Math.floor(matrix.length / 2);
       if (colLengthIsOdd) {
-        midCol = Math.floor(array[0].length / 2);
+        midCol = Math.floor(matrix[0].length / 2);
       } else {
-        midCol = array[midRow][Math.floor((array[0].length / 2) - 1)] > array[midRow][Math.floor(array[0].length / 2)] ?
-        Math.floor((array[0].length / 2) - 1) :
-        Math.floor(array[0].length / 2)
+        midCol = matrix[midRow][Math.floor((matrix[0].length / 2) - 1)] > matrix[midRow][Math.floor(matrix[0].length / 2)] ?
+        Math.floor((matrix[0].length / 2) - 1) :
+        Math.floor(matrix[0].length / 2)
+      }
+    } else if (!rowLengthIsOdd) {
+      midRow = matrix[Math.floor((matrix.length / 2) - 1)][midCol] > matrix[Math.floor(matrix.length / 2)][midCol] ?
+        Math.floor((matrix.length / 2) - 1) :
+        Math.floor(matrix.length / 2)
+      if (colLengthIsOdd) {
+        midCol = Math.floor(matrix[0].length / 2);
+      } else {
+        midCol = matrix[midRow][Math.floor((matrix[0].length / 2) - 1)] > matrix[midRow][Math.floor(matrix[0].length / 2)] ?
+        Math.floor((matrix[0].length / 2) - 1) :
+        Math.floor(matrix[0].length / 2)
       }
     }
+
     return [midRow, midCol];
   };
   
-  const centerCoords = findCenter(matrix);
-  count += matrix[centerCoords[0]][centerCoords[1]];
-  matrix[centerCoords[0]][centerCoords[1]] = 0;
+  centerCoords = findCenter(matrix);
   
-  // implement recursive function that checks for the adjacent coordinates with largest count 
+  const eatLargestAdjacent = (matrix, currentSpot) => {
+    let count = 0;
+    let tempMatrix = matrix;
+    let largestAdjacentVal = 0;
+    let tempDirection;
+    let newCenterCoords;
+    const midRow = currentSpot[0];
+    const midCol = currentSpot[1];
+    const adjacents = {
+      'tempMatrix[midRow - 1][midCol]': tempMatrix[midRow - 1][midCol],
+      'tempMatrix[midRow - 1][midCol + 1]': tempMatrix[midRow - 1][midCol + 1],
+      'tempMatrix[midRow][midCol + 1]': tempMatrix[midRow][midCol + 1],
+      'tempMatrix[midRow + 1][midCol + 1]': tempMatrix[midRow + 1][midCol + 1],
+      'tempMatrix[midRow + 1][midCol]': tempMatrix[midRow + 1][midCol],
+      'tempMatrix[midRow + 1][midCol - 1]': tempMatrix[midRow + 1][midCol - 1],
+      'tempMatrix[midRow][midCol - 1]': tempMatrix[midRow][midCol - 1],
+      'tempMatrix[midRow - 1][midCol - 1]': tempMatrix[midRow - 1][midCol - 1]
+    }
+    // let above = tempMatrix[midRow - 1][midCol];
+    // let aboveRight = tempMatrix[midRow - 1][midCol + 1];
+    // let right = tempMatrix[midRow][midCol + 1];
+    // let belowRight = tempMatrix[midRow + 1][midCol + 1];
+    // let below = tempMatrix[midRow + 1][midCol];
+    // let belowLeft = tempMatrix[midRow + 1][midCol - 1];
+    // let left = tempMatrix[midRow][midCol - 1];
+    // let aboveLeft = tempMatrix[midRow - 1][midCol - 1];
 
-  return count;
+    count += tempMatrix[midRow][midCol];
+    tempMatrix[midRow][midCol] = 0;
+    
+    for (let direction in adjacents) {
+      if (adjacents[direction] > largestAdjacentVal) {
+        largestAdjacentVal = adjacents[direction];
+        tempDirection = direction.slice(10, -1) + ']';
+        console.log(tempDirection)
+      }
+    }
+  
+    count += largestAdjacentVal;
+    eval(tempDirection + '=' + 0);
+    // console.log(tempDirection);
+    // console.log(tempMatrix)
+
+    if (largestAdjacentVal === 0) {
+      return count;
+    } else {
+      // return eatLargestAdjacent(tempMatrix, newCenterCoords)
+    }
+  }
+
+  return eatLargestAdjacent(matrix, centerCoords);
 };
+
+findNumCarrots(field);

@@ -10,21 +10,8 @@
  * @return {string}
  */
 var reverseWords = function(s) {
-  var answer = [];
-  var splitSentence = s.split(" ");
-  
-  var reverseWord = function(word) {
-    var result = [];
-    for (var i = word.length - 1; i >= 0; i--) {
-      result.push(word[i])
-    }
-    var resultJoined = result.join("");
-    return resultJoined;
+  var reverseWord = function(str) {
+    return str.split("").reverse().join("")
   }
-  
-  for (var i = 0; i < splitSentence.length; i++) {
-    answer.push(reverseWord(splitSentence[i]))
-  }
-  
-  return answer.join(" ")
+  return s.split(" ").map(word => reverseWord(word)).join(" ");
 };

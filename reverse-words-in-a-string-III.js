@@ -10,19 +10,21 @@
  * @return {string}
  */
 var reverseWords = function(s) {
-    var answer = [];
-    
-    var reverse = function(word) {
-      var result = [];
-      for (var i = word.length - 1; i >= 0; i--) {
-        result.push(word[i]);
-      }
-      var resultJoined = result.join("");
-      return resultJoined;
+  var answer = [];
+  var splitSentence = s.split(" ");
+  
+  var reverseWord = function(word) {
+    var result = [];
+    for (var i = word.length - 1; i >= 0; i--) {
+      result.push(word[i])
     }
-    
-    for (var i = 0; i < s.length; i++) {
-        answer.push(reverse(s[i]))  
-    }
-  console.log(answer)
+    var resultJoined = result.join("");
+    return resultJoined;
+  }
+  
+  for (var i = 0; i < splitSentence.length; i++) {
+    answer.push(reverseWord(splitSentence[i]))
+  }
+  
+  return answer.join(" ")
 };
